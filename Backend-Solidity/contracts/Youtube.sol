@@ -35,8 +35,6 @@ contract Youtube {
         address author
     );
 
-    constructor() {}
-
     // Function to upload a video
     function uploadVideo(
         string memory _videoHash,

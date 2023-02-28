@@ -1,7 +1,13 @@
 const { network } = require("hardhat")
 const { verify } = require("../utils/verify")
-const { networkConfig, developmentChains } = require("../helper-hardhat-config")
+const {
+    networkConfig,
+    developmentChains,
+    VERIFICATION_BLOCK_CONFIRMATIONS,
+} = require("../helper-hardhat-config")
 const hre = require("hardhat")
+
+const BLOCK_CONFIRMATION = VERIFICATION_BLOCK_CONFIRMATIONS
 
 module.exports = async (hre) => {
     const { getNamedAccounts, deployments } = hre
@@ -14,7 +20,7 @@ module.exports = async (hre) => {
         from: deployer,
         log: true,
         arg: [],
-        waitConfirmations: network.config.blockConfirmations || 1,
+        waitConfirmations: BLOCK_CONFIRMATION,
     })
 
     log(`youtube address ${contract.address}`)

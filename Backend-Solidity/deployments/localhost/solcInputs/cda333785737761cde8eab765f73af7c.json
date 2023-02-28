@@ -1,0 +1,35 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/Youtube.sol": {
+      "content": "//SPDX-License-Identifier: Unlicense\npragma solidity ^0.8.8;\n\ncontract Youtube {\n    // Declaring the videoCount 0 by default\n    uint256 public videoCount = 0;\n    // Name of your contract\n    string public name = \"YouTube\";\n    // Creating a mapping of videoCount to Video\n    mapping(uint256 => Video) public videos;\n\n    //  Create a struct called 'Video' with the following properties:\n    struct Video {\n        uint256 id;\n        string hash;\n        string title;\n        string description;\n        string location;\n        string category;\n        string thumbnailHash;\n        string date;\n        address author;\n    }\n\n    // Create a 'VideoUploaded' event that emits the properties of the video\n    event VideoUploaded(\n        uint256 id,\n        string hash,\n        string title,\n        string description,\n        string location,\n        string category,\n        string thumbnailHash,\n        string date,\n        address author\n    );\n\n    // Function to upload a video\n    function uploadVideo(\n        string memory _videoHash,\n        string memory _title,\n        string memory _description,\n        string memory _location,\n        string memory _category,\n        string memory _thumbnailHash,\n        string memory _date\n    ) public {\n        // Validating the video hash, title and author's address\n        require(bytes(_videoHash).length > 0);\n        require(bytes(_title).length > 0);\n        require(msg.sender != address(0));\n\n        // Incrementing the video count\n        videoCount++;\n        // Adding the video to the contract\n        videos[videoCount] = Video(\n            videoCount,\n            _videoHash,\n            _title,\n            _description,\n            _location,\n            _category,\n            _thumbnailHash,\n            _date,\n            msg.sender\n        );\n        // Triggering the event\n        emit VideoUploaded(\n            videoCount,\n            _videoHash,\n            _title,\n            _description,\n            _location,\n            _category,\n            _thumbnailHash,\n            _date,\n            msg.sender\n        );\n    }\n}\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}

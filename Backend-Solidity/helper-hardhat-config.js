@@ -1,19 +1,25 @@
-const networkConfig = {
+const networkconfig = {
+    default: {
+        name: "hardhat",
+    },
+    31337: {
+        name: "localhost",
+    },
     5: {
         name: "goerli",
     },
-    31337: {
-        name: "hardhat",
-    },
 }
 
-const developmentChains = ["hardhat", "Localhost"]
-const contractAbiFile = "../Frontend/pages/Constants/ContractAbi.js"
-const contractAddressesFile = "../Frontend/pages/Constants/ContractAddresses.js"
+const developmentChains = ["hardhat", "localhost"]
+const contractAbiFile = "../Frontend/pages/Constants/ContractAbi.json"
+const contractAddressesFile =
+    "../Frontend/pages/Constants/ContractAddresses.json"
+const VERIFICATION_BLOCK_CONFIRMATIONS = 1
 
 module.exports = {
-    networkConfig,
+    networkconfig,
     developmentChains,
     contractAddressesFile,
     contractAbiFile,
+    VERIFICATION_BLOCK_CONFIRMATIONS,
 }

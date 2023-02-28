@@ -1,7 +1,7 @@
 const { network, ethers } = require("hardhat")
 const {
     contractAbiFile,
-    contractAddressFile,
+    contractAddressesFile,
 } = require("../helper-hardhat-config")
 const fs = require("fs")
 
@@ -15,7 +15,8 @@ module.exports = async () => {
 }
 
 async function updateContractAbi() {
-    const Youtube = ethers.getContract("Youtube")
+    const Youtube = await ethers.getContract("Youtube")
+
     fs.writeFileSync(
         contractAbiFile,
         (await Youtube).interface.format(ethers.utils.FormatTypes.json)
@@ -23,13 +24,11 @@ async function updateContractAbi() {
 }
 
 async function updateContractAddresses() {
-    const Youtube = await ethers.getContract("Youtube")
-    console.log(Youtube)
-    const contractAddresses = JSON.parse(
-        fs.readFileSync(contractAddressFile, "utf8")
-    )
     const chainId = await network.config.chainId.toString()
-    console.log("ChainId", chainId)
+    const Youtube = await ethers.getContract("Youtube")
+    const contractAddresses = await JSON.parse(
+        fs.readFileSync(contractAddressesFile, "utf8")
+    )
     if (chainId in contractAddresses) {
         console.log(`contract Address ${Youtube.address}`)
 
@@ -40,7 +39,7 @@ async function updateContractAddresses() {
         console.log(`contract Address ${(await Youtube).address}`)
         contractAddresses[chainId] = [Youtube.address]
     }
-    fs.writeFileSync(contractAddressFile, JSON.stringify(contractAddresses))
+    fs.writeFileSync(contractAddressesFile, JSON.stringify(contractAddresses))
 }
 
 module.exports.tags = ["all", "frontend"]
