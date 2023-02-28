@@ -1,7 +1,7 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.8;
 
-contract YouTube {
+contract Youtube {
     // Declaring the videoCount 0 by default
     uint256 public videoCount = 0;
     // Name of your contract
